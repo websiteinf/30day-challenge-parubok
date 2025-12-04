@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>60-денний Челендж Трекер</title>
+    <title>30-денний Челендж Трекер</title>
     <style>
         * {
             margin: 0;
@@ -134,21 +134,15 @@
 
         .achievements-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 15px;
-        }
-
-        @media (min-width: 900px) {
-            .achievements-grid {
-                grid-template-columns: repeat(5, 1fr);
-            }
         }
 
         .achievement {
             background: #f9fafb;
             border: 2px solid #e5e7eb;
             border-radius: 15px;
-            padding: 15px;
+            padding: 20px;
             text-align: center;
             transition: all 0.3s ease;
         }
@@ -167,7 +161,7 @@
         }
 
         .achievement-icon {
-            font-size: 2.2rem;
+            font-size: 2.5rem;
             margin-bottom: 10px;
             filter: grayscale(100%);
             opacity: 0.3;
@@ -209,31 +203,6 @@
             grid-template-columns: repeat(7, 1fr);
             gap: 10px;
             margin-bottom: 20px;
-        }
-
-        .month-section {
-            margin-bottom: 40px;
-        }
-
-        .month-section:not(:first-of-type) {
-            padding-top: 30px;
-            border-top: 2px dashed #d4e4ff;
-        }
-
-        .month-title {
-            text-align: center;
-            color: #6b9ff5;
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            padding: 15px;
-            background: linear-gradient(135deg, #e8f2ff 0%, #f5edff 100%);
-            border-radius: 15px;
-            box-shadow: 0 2px 10px rgba(107, 159, 245, 0.1);
-        }
-
-        .month-section:last-of-type .month-title {
-            background: linear-gradient(135deg, #f5edff 0%, #ffe8f5 100%);
         }
 
         .day {
@@ -419,11 +388,6 @@
                 grid-template-columns: repeat(2, 1fr);
                 gap: 10px;
             }
-
-            .month-title {
-                font-size: 1.2rem;
-                padding: 12px;
-            }
         }
 
         @media (max-width: 600px) {
@@ -448,15 +412,6 @@
                 gap: 10px;
             }
 
-            .month-title {
-                font-size: 1.1rem;
-                padding: 10px;
-            }
-
-            .month-section {
-                margin-bottom: 30px;
-            }
-
             .achievement-modal-content {
                 margin: 20px;
                 padding: 30px 20px;
@@ -467,8 +422,8 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🎯 60-ДЕННИЙ ЧЕЛЕНДЖ</h1>
-            <p>По 1 відео кожен день протягом 2 місяців</p>
+            <h1>🎯 30-ДЕННИЙ ЧЕЛЕНДЖ</h1>
+            <p>По 1 відео кожен день протягом місяця</p>
         </div>
 
         <div class="stats">
@@ -481,7 +436,7 @@
                 <div class="stat-label">Streak 🔥</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number" id="remainingDays">60</div>
+                <div class="stat-number" id="remainingDays">30</div>
                 <div class="stat-label">Залишилось днів</div>
             </div>
         </div>
@@ -513,33 +468,13 @@
                 </div>
                 <div class="achievement" id="achievement-30">
                     <div class="achievement-icon">🥇</div>
-                    <div class="achievement-name">Про</div>
-                    <div class="achievement-desc">30 відео</div>
-                </div>
-                <div class="achievement" id="achievement-50">
-                    <div class="achievement-icon">💎</div>
-                    <div class="achievement-name">Експерт</div>
-                    <div class="achievement-desc">50 відео</div>
-                </div>
-                <div class="achievement" id="achievement-60">
-                    <div class="achievement-icon">👑</div>
                     <div class="achievement-name">Легенда</div>
-                    <div class="achievement-desc">60 відео</div>
+                    <div class="achievement-desc">30 відео</div>
                 </div>
             </div>
         </div>
 
-        <!-- Місяць 1 -->
-        <div class="month-section">
-            <div class="month-title">📅 МІСЯЦЬ 1 (Дні 1-30)</div>
-            <div class="calendar" id="calendar-month1"></div>
-        </div>
-
-        <!-- Місяць 2 -->
-        <div class="month-section">
-            <div class="month-title">⭐ МІСЯЦЬ 2 (Дні 31-60)</div>
-            <div class="calendar" id="calendar-month2"></div>
-        </div>
+        <div class="calendar" id="calendar"></div>
 
         <div class="controls">
             <button class="btn btn-primary" onclick="markToday()">Відзначити сьогодні ✓</button>
@@ -560,7 +495,7 @@
     <script>
         let completedDays = new Set();
         let unlockedAchievements = new Set();
-        const totalDays = 60;
+        const totalDays = 30;
         const STORAGE_KEY = 'challenge_progress';
         const ACHIEVEMENTS_KEY = 'unlocked_achievements';
 
@@ -568,9 +503,7 @@
         const achievements = {
             10: { icon: '🥉', name: 'Новачок', desc: 'Опубліковано 10 відео!', message: 'Ти досяг позначки в 10 відео! Так тримати!' },
             20: { icon: '🥈', name: 'Майстер', desc: 'Опубліковано 20 відео!', message: 'Неймовірно! 20 відео - це серйозне досягнення!' },
-            30: { icon: '🥇', name: 'Про', desc: 'Опубліковано 30 відео!', message: 'Місяць виконання позаду! Ти Про! 🔥' },
-            50: { icon: '💎', name: 'Експерт', desc: 'Опубліковано 50 відео!', message: 'ВРАЖАЮЧЕ! 50 відео - ти справжній експерт! 💎' },
-            60: { icon: '👑', name: 'Легенда', desc: 'Пройдено повний челендж!', message: 'ТИ ЛЕГЕНДА! 60 днів виконання - це неймовірно! 🎊👑' }
+            30: { icon: '🥇', name: 'Легенда', desc: 'Пройдено повний челендж!', message: 'ТИ ЛЕГЕНДА! 30 днів виконання - це круто! 🎊' }
         };
 
         // Мотиваційні повідомлення залежно від прогресу
@@ -579,14 +512,11 @@
             1: { icon: '🎉', text: 'Чудовий старт! Перше відео зроблено!' },
             3: { icon: '💪', text: 'Три дні поспіль! Ти вже формуєш звичку!' },
             7: { icon: '🔥', text: 'Тиждень виконання! Ти на правильному шляху!' },
-            10: { icon: '⭐', text: 'Перша ачівка! Отримано бронзу! 🥉' },
-            14: { icon: '📅', text: '2 тижні виконання! Звичка формується!' },
-            20: { icon: '🥈', text: 'Отримано срібло! 20 відео - це круто!' },
-            30: { icon: '🥇', text: 'Місяць позаду! Отримано золото! Ти Про! 🔥' },
-            40: { icon: '💎', text: 'Дві третини пройдено! Ти на фінішній прямій!' },
-            50: { icon: '👑', text: 'Отримано діамант! 50 відео - ти експерт! 💎' },
-            55: { icon: '🎯', text: 'Залишилось лише 5 днів! Фініш близько!' },
-            60: { icon: '🎊', text: 'ВІТАЄМО! Ти завершив 60-денний челендж! ТИ ЛЕГЕНДА! 👑' }
+            10: { icon: '⭐', text: 'Перша третина позаду! Отримано ачівку! 🥉' },
+            14: { icon: '🎯', text: 'Половина шляху пройдено! Ти неймовірний!' },
+            20: { icon: '🏆', text: 'Дві третини виконано! Отримано ачівку! 🥈' },
+            25: { icon: '👑', text: 'Залишилось лише 5 днів! Ти майже легенда!' },
+            30: { icon: '🎊', text: 'ВІТАЄМО! Ти завершив 30-денний челендж! 🥇' }
         };
 
         // Завантаження прогресу з localStorage
@@ -618,11 +548,10 @@
         }
 
         function initCalendar() {
-            // Місяць 1: дні 1-30
-            const calendar1 = document.getElementById('calendar-month1');
-            calendar1.innerHTML = '';
+            const calendar = document.getElementById('calendar');
+            calendar.innerHTML = '';
             
-            for (let i = 1; i <= 30; i++) {
+            for (let i = 1; i <= totalDays; i++) {
                 const day = document.createElement('div');
                 day.className = 'day';
                 if (completedDays.has(i)) {
@@ -635,27 +564,7 @@
                 `;
                 
                 day.onclick = () => toggleDay(i);
-                calendar1.appendChild(day);
-            }
-
-            // Місяць 2: дні 31-60
-            const calendar2 = document.getElementById('calendar-month2');
-            calendar2.innerHTML = '';
-            
-            for (let i = 31; i <= 60; i++) {
-                const day = document.createElement('div');
-                day.className = 'day';
-                if (completedDays.has(i)) {
-                    day.classList.add('completed');
-                }
-                
-                day.innerHTML = `
-                    <span class="day-number">День ${i}</span>
-                    <span class="checkmark">✓</span>
-                `;
-                
-                day.onclick = () => toggleDay(i);
-                calendar2.appendChild(day);
+                calendar.appendChild(day);
             }
             
             updateStats();
@@ -696,8 +605,8 @@
         function checkNewAchievements() {
             const completed = completedDays.size;
             
-            // Перевіряємо кожні 10, 20, 30, 50 та 60 відео
-            [10, 20, 30, 50, 60].forEach(milestone => {
+            // Перевіряємо кожні 10 відео
+            [10, 20, 30].forEach(milestone => {
                 if (completed >= milestone && !unlockedAchievements.has(milestone)) {
                     unlockAchievement(milestone);
                 }
@@ -716,7 +625,7 @@
         }
 
         function updateAchievements() {
-            [10, 20, 30, 50, 60].forEach(milestone => {
+            [10, 20, 30].forEach(milestone => {
                 const element = document.getElementById(`achievement-${milestone}`);
                 if (unlockedAchievements.has(milestone)) {
                     element.classList.add('unlocked');
